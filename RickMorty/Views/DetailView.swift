@@ -9,6 +9,7 @@ import SwiftUI
 
 struct DetailView: View {
     let character: Character
+    var namespace: Namespace.ID
     @State private var showShareSheet = false
     
     var body: some View {
@@ -80,6 +81,7 @@ struct DetailView: View {
                     .frame(maxWidth: .infinity)
                     .frame(height: height)
                     .clipped()
+                    .matchedGeometryEffect(id: "image-\(character.id)", in: namespace)
                     .accessibilityLabel("Image of \(character.name)")
                     .accessibilityAddTraits(.isImage)
             case .failure:
@@ -166,39 +168,47 @@ struct ShareSheet: UIViewControllerRepresentable {
 }
 
 #Preview {
+    @Previewable @Namespace var namespace
     NavigationView {
-        DetailView(character: Character(
-            id: 1,
-            name: "Rick Sanchez",
-            status: "Alive",
-            species: "Human",
-            type: "Genius Scientist",
-            gender: "Male",
-            origin: Origin(name: "Earth (C-137)", url: ""),
-            location: Location(name: "Citadel of Ricks", url: ""),
-            image: "https://rickandmortyapi.com/api/character/avatar/1.jpeg",
-            episode: [],
-            url: "",
-            created: "2017-11-04T18:48:46.250Z"
-        ))
+        DetailView(
+            character: Character(
+                id: 1,
+                name: "Rick Sanchez",
+                status: "Alive",
+                species: "Human",
+                type: "Genius Scientist",
+                gender: "Male",
+                origin: Origin(name: "Earth (C-137)", url: ""),
+                location: Location(name: "Citadel of Ricks", url: ""),
+                image: "https://rickandmortyapi.com/api/character/avatar/1.jpeg",
+                episode: [],
+                url: "",
+                created: "2017-11-04T18:48:46.250Z"
+            ),
+            namespace: namespace
+        )
     }
 }
 
 #Preview("Character without type") {
+    @Previewable @Namespace var namespace
     NavigationView {
-        DetailView(character: Character(
-            id: 2,
-            name: "Morty Smith",
-            status: "Alive",
-            species: "Human",
-            type: "",
-            gender: "Male",
-            origin: Origin(name: "Earth (C-137)", url: ""),
-            location: Location(name: "Earth (Replacement Dimension)", url: ""),
-            image: "https://rickandmortyapi.com/api/character/avatar/2.jpeg",
-            episode: [],
-            url: "",
-            created: "2017-11-04T18:50:21.651Z"
-        ))
+        DetailView(
+            character: Character(
+                id: 2,
+                name: "Morty Smith",
+                status: "Alive",
+                species: "Human",
+                type: "",
+                gender: "Male",
+                origin: Origin(name: "Earth (C-137)", url: ""),
+                location: Location(name: "Earth (Replacement Dimension)", url: ""),
+                image: "https://rickandmortyapi.com/api/character/avatar/2.jpeg",
+                episode: [],
+                url: "",
+                created: "2017-11-04T18:50:21.651Z"
+            ),
+            namespace: namespace
+        )
     }
 }

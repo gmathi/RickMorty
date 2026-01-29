@@ -9,6 +9,7 @@ import SwiftUI
 
 struct CharacterRow: View {
     let character: Character
+    var namespace: Namespace.ID
     
     var body: some View {
         HStack(spacing: 12) {
@@ -25,6 +26,7 @@ struct CharacterRow: View {
                         .aspectRatio(contentMode: .fill)
                         .frame(width: 60, height: 60)
                         .clipShape(RoundedRectangle(cornerRadius: 8))
+                        .matchedGeometryEffect(id: "image-\(character.id)", in: namespace)
                         .accessibilityHidden(true)
                 case .failure:
                     Image(systemName: "person.fill")
@@ -64,18 +66,22 @@ struct CharacterRow: View {
 }
 
 #Preview {
-    CharacterRow(character: Character(
-        id: 1,
-        name: "Rick Sanchez",
-        status: "Alive",
-        species: "Human",
-        type: "",
-        gender: "Male",
-        origin: Origin(name: "Earth (C-137)", url: ""),
-        location: Location(name: "Citadel of Ricks", url: ""),
-        image: "https://rickandmortyapi.com/api/character/avatar/1.jpeg",
-        episode: [],
-        url: "",
-        created: "2017-11-04T18:48:46.250Z"
-    ))
+    @Previewable @Namespace var namespace
+    CharacterRow(
+        character: Character(
+            id: 1,
+            name: "Rick Sanchez",
+            status: "Alive",
+            species: "Human",
+            type: "",
+            gender: "Male",
+            origin: Origin(name: "Earth (C-137)", url: ""),
+            location: Location(name: "Citadel of Ricks", url: ""),
+            image: "https://rickandmortyapi.com/api/character/avatar/1.jpeg",
+            episode: [],
+            url: "",
+            created: "2017-11-04T18:48:46.250Z"
+        ),
+        namespace: namespace
+    )
 }
