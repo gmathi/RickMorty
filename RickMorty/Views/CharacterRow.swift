@@ -58,12 +58,6 @@ struct CharacterRow: View {
             .accessibilityElement(children: .combine)
             
             Spacer()
-            
-            // Chevron indicator
-            Image(systemName: "chevron.right")
-                .foregroundColor(.gray)
-                .font(.system(size: 14, weight: .semibold))
-                .accessibilityHidden(true)
         }
         .padding(.vertical, 8)
         .padding(.horizontal, 16)
