@@ -23,6 +23,7 @@ struct Character: Identifiable, Codable {
     
     var formattedCreatedDate: String {
         let isoFormatter = ISO8601DateFormatter()
+        isoFormatter.formatOptions = [.withInternetDateTime, .withFractionalSeconds]
         guard let date = isoFormatter.date(from: created) else {
             return created
         }
