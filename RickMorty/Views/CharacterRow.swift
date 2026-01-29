@@ -20,6 +20,7 @@ struct CharacterRow: View {
                     ProgressView()
                         .frame(width: 60, height: 60)
                         .accessibilityLabel("Loading image")
+                        .accessibilityIdentifier("characterRowImageLoading")
                 case .success(let image):
                     image
                         .resizable()
@@ -28,6 +29,7 @@ struct CharacterRow: View {
                         .clipShape(RoundedRectangle(cornerRadius: 8))
                         .matchedGeometryEffect(id: "image-\(character.id)", in: namespace)
                         .accessibilityHidden(true)
+                        .accessibilityIdentifier("characterRowImage")
                 case .failure:
                     Image(systemName: "person.fill")
                         .resizable()
@@ -35,6 +37,7 @@ struct CharacterRow: View {
                         .frame(width: 60, height: 60)
                         .foregroundColor(.gray)
                         .accessibilityHidden(true)
+                        .accessibilityIdentifier("characterRowImagePlaceholder")
                 @unknown default:
                     EmptyView()
                 }
@@ -45,10 +48,12 @@ struct CharacterRow: View {
                 Text(character.name)
                     .font(.headline)
                     .foregroundColor(.primary)
+                    .accessibilityIdentifier("characterRowName")
                 
                 Text(character.species)
                     .font(.subheadline)
                     .foregroundColor(.secondary)
+                    .accessibilityIdentifier("characterRowSpecies")
             }
             .accessibilityElement(children: .combine)
             
@@ -62,6 +67,7 @@ struct CharacterRow: View {
         }
         .padding(.vertical, 8)
         .padding(.horizontal, 16)
+        .accessibilityIdentifier("characterRowContent")
     }
 }
 

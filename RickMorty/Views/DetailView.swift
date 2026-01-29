@@ -34,6 +34,7 @@ struct DetailView: View {
                     Image(systemName: "square.and.arrow.up")
                         .accessibilityLabel("Share character")
                         .accessibilityHint("Share character image and information")
+                        .accessibilityIdentifier("shareButton")
                 }
             }
         }
@@ -48,6 +49,7 @@ struct DetailView: View {
             characterImage(height: 300)
             characterDetails
         }
+        .accessibilityIdentifier("detailViewPortrait")
     }
     
     // Landscape layout
@@ -62,6 +64,7 @@ struct DetailView: View {
             .frame(maxWidth: geometry.size.width * 0.5)
         }
         .padding(.horizontal, 16)
+        .accessibilityIdentifier("detailViewLandscape")
     }
     
     // Character image component
@@ -74,6 +77,7 @@ struct DetailView: View {
                     .frame(height: height)
                     .background(Color.gray.opacity(0.2))
                     .accessibilityLabel("Loading character image")
+                    .accessibilityIdentifier("characterImageLoading")
             case .success(let image):
                 image
                     .resizable()
@@ -84,6 +88,7 @@ struct DetailView: View {
                     .matchedGeometryEffect(id: "image-\(character.id)", in: namespace)
                     .accessibilityLabel("Image of \(character.name)")
                     .accessibilityAddTraits(.isImage)
+                    .accessibilityIdentifier("characterImage")
             case .failure:
                 Image(systemName: "person.fill")
                     .resizable()
@@ -93,6 +98,7 @@ struct DetailView: View {
                     .foregroundColor(.gray)
                     .background(Color.gray.opacity(0.2))
                     .accessibilityLabel("Character image unavailable")
+                    .accessibilityIdentifier("characterImagePlaceholder")
             @unknown default:
                 EmptyView()
             }
@@ -121,6 +127,7 @@ struct DetailView: View {
         }
         .padding(.horizontal, 16)
         .accessibilityElement(children: .contain)
+        .accessibilityIdentifier("characterDetailsSection")
     }
 }
 
@@ -134,13 +141,16 @@ struct DetailRow: View {
             Text(label)
                 .font(.subheadline)
                 .foregroundColor(.secondary)
+                .accessibilityIdentifier("detailRowLabel_\(label.lowercased())")
             
             Text(value)
                 .font(.body)
                 .foregroundColor(.primary)
+                .accessibilityIdentifier("detailRowValue_\(label.lowercased())")
         }
         .accessibilityElement(children: .combine)
         .accessibilityLabel("\(label): \(value)")
+        .accessibilityIdentifier("detailRow_\(label.lowercased())")
     }
 }
 

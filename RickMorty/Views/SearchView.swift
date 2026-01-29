@@ -26,6 +26,7 @@ struct SearchView: View {
                         .textInputAutocapitalization(.never)
                         .accessibilityLabel("Search characters")
                         .accessibilityHint("Enter character name to search")
+                        .accessibilityIdentifier("searchTextField")
                     
                     if !viewModel.searchText.isEmpty {
                         Button(action: {
@@ -36,6 +37,7 @@ struct SearchView: View {
                         }
                         .accessibilityLabel("Clear search")
                         .accessibilityHint("Clears the search text")
+                        .accessibilityIdentifier("clearSearchButton")
                     }
                 }
                 .padding(12)
@@ -64,6 +66,7 @@ struct SearchView: View {
                                     }
                                     .pickerStyle(.menu)
                                     .accessibilityLabel("Status filter")
+                                    .accessibilityIdentifier("statusFilterPicker")
                                 }
                                 .frame(maxWidth: .infinity, alignment: .leading)
                             }
@@ -84,6 +87,7 @@ struct SearchView: View {
                                     }
                                     .pickerStyle(.menu)
                                     .accessibilityLabel("Species filter")
+                                    .accessibilityIdentifier("speciesFilterPicker")
                                 }
                                 .frame(maxWidth: .infinity, alignment: .leading)
                             }
@@ -104,6 +108,7 @@ struct SearchView: View {
                                     }
                                     .pickerStyle(.menu)
                                     .accessibilityLabel("Type filter")
+                                    .accessibilityIdentifier("typeFilterPicker")
                                 }
                                 .frame(maxWidth: .infinity, alignment: .leading)
                             }
@@ -119,6 +124,7 @@ struct SearchView: View {
                                     .foregroundColor(.red)
                             }
                             .accessibilityLabel("Clear all filters")
+                            .accessibilityIdentifier("clearFiltersButton")
                         }
                     }
                     .padding(.horizontal, 16)
@@ -127,6 +133,7 @@ struct SearchView: View {
                     .cornerRadius(10)
                     .padding(.horizontal, 16)
                     .padding(.bottom, 8)
+                    .accessibilityIdentifier("filtersSection")
                 }
                 
                 // Loading indicator
@@ -134,6 +141,7 @@ struct SearchView: View {
                     ProgressView()
                         .padding()
                         .accessibilityLabel("Loading characters")
+                        .accessibilityIdentifier("loadingIndicator")
                 }
                 
                 // Error message
@@ -144,6 +152,7 @@ struct SearchView: View {
                         .multilineTextAlignment(.center)
                         .padding()
                         .accessibilityLabel("Error: \(errorMessage)")
+                        .accessibilityIdentifier("errorMessage")
                 }
                 
                 // Character list
@@ -162,6 +171,7 @@ struct SearchView: View {
                         .frame(maxWidth: .infinity, maxHeight: .infinity)
                         .accessibilityElement(children: .combine)
                         .accessibilityLabel("No characters found for your search")
+                        .accessibilityIdentifier("emptyStateView")
                     } else if viewModel.characters.isEmpty {
                         // Initial state
                         VStack(spacing: 12) {
@@ -176,6 +186,7 @@ struct SearchView: View {
                         .frame(maxWidth: .infinity, maxHeight: .infinity)
                         .accessibilityElement(children: .combine)
                         .accessibilityLabel("Search for Rick and Morty characters")
+                        .accessibilityIdentifier("initialStateView")
                     } else {
                         // Results list
                         List(viewModel.characters) { character in
@@ -186,9 +197,11 @@ struct SearchView: View {
                             .listRowSeparator(.visible)
                             .accessibilityLabel("\(character.name), \(character.species)")
                             .accessibilityHint("Double tap to view details")
+                            .accessibilityIdentifier("characterRow_\(character.id)")
                         }
                         .listStyle(.plain)
                         .accessibilityLabel("Search results")
+                        .accessibilityIdentifier("characterList")
                     }
                 }
                 
