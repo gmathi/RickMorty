@@ -17,11 +17,14 @@ struct SearchView: View {
                 HStack {
                     Image(systemName: "magnifyingglass")
                         .foregroundColor(.gray)
+                        .accessibilityHidden(true)
                     
                     TextField("Search characters...", text: $viewModel.searchText)
                         .textFieldStyle(.plain)
                         .autocorrectionDisabled()
                         .textInputAutocapitalization(.never)
+                        .accessibilityLabel("Search characters")
+                        .accessibilityHint("Enter character name to search")
                     
                     if !viewModel.searchText.isEmpty {
                         Button(action: {
@@ -30,6 +33,8 @@ struct SearchView: View {
                             Image(systemName: "xmark.circle.fill")
                                 .foregroundColor(.gray)
                         }
+                        .accessibilityLabel("Clear search")
+                        .accessibilityHint("Clears the search text")
                     }
                 }
                 .padding(12)
@@ -42,6 +47,7 @@ struct SearchView: View {
                 if viewModel.isLoading {
                     ProgressView()
                         .padding()
+                        .accessibilityLabel("Loading characters")
                 }
                 
                 // Error message
@@ -51,6 +57,7 @@ struct SearchView: View {
                         .font(.subheadline)
                         .multilineTextAlignment(.center)
                         .padding()
+                        .accessibilityLabel("Error: \(errorMessage)")
                 }
                 
                 // Character list
@@ -61,22 +68,28 @@ struct SearchView: View {
                             Image(systemName: "magnifyingglass")
                                 .font(.system(size: 48))
                                 .foregroundColor(.gray)
+                                .accessibilityHidden(true)
                             Text("No characters found")
                                 .font(.headline)
                                 .foregroundColor(.secondary)
                         }
                         .frame(maxWidth: .infinity, maxHeight: .infinity)
+                        .accessibilityElement(children: .combine)
+                        .accessibilityLabel("No characters found for your search")
                     } else if viewModel.characters.isEmpty {
                         // Initial state
                         VStack(spacing: 12) {
                             Image(systemName: "person.3.fill")
                                 .font(.system(size: 48))
                                 .foregroundColor(.gray)
+                                .accessibilityHidden(true)
                             Text("Search for Rick and Morty characters")
                                 .font(.headline)
                                 .foregroundColor(.secondary)
                         }
                         .frame(maxWidth: .infinity, maxHeight: .infinity)
+                        .accessibilityElement(children: .combine)
+                        .accessibilityLabel("Search for Rick and Morty characters")
                     } else {
                         // Results list
                         List(viewModel.characters) { character in
@@ -85,8 +98,11 @@ struct SearchView: View {
                             }
                             .listRowInsets(EdgeInsets())
                             .listRowSeparator(.visible)
+                            .accessibilityLabel("\(character.name), \(character.species)")
+                            .accessibilityHint("Double tap to view details")
                         }
                         .listStyle(.plain)
+                        .accessibilityLabel("Search results")
                     }
                 }
                 

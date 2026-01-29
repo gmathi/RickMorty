@@ -37,6 +37,24 @@ struct Character: Identifiable, Codable {
     var hasType: Bool {
         return !type.isEmpty
     }
+    
+    // Shareable text representation
+    var shareableText: String {
+        var text = """
+        \(name)
+        Species: \(species)
+        Status: \(status)
+        Origin: \(origin.name)
+        """
+        
+        if hasType {
+            text += "\nType: \(type)"
+        }
+        
+        text += "\nCreated: \(formattedCreatedDate)"
+        
+        return text
+    }
 }
 
 struct Origin: Codable {

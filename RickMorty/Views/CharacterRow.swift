@@ -18,18 +18,21 @@ struct CharacterRow: View {
                 case .empty:
                     ProgressView()
                         .frame(width: 60, height: 60)
+                        .accessibilityLabel("Loading image")
                 case .success(let image):
                     image
                         .resizable()
                         .aspectRatio(contentMode: .fill)
                         .frame(width: 60, height: 60)
                         .clipShape(RoundedRectangle(cornerRadius: 8))
+                        .accessibilityHidden(true)
                 case .failure:
                     Image(systemName: "person.fill")
                         .resizable()
                         .aspectRatio(contentMode: .fit)
                         .frame(width: 60, height: 60)
                         .foregroundColor(.gray)
+                        .accessibilityHidden(true)
                 @unknown default:
                     EmptyView()
                 }
@@ -45,6 +48,7 @@ struct CharacterRow: View {
                     .font(.subheadline)
                     .foregroundColor(.secondary)
             }
+            .accessibilityElement(children: .combine)
             
             Spacer()
             
@@ -52,6 +56,7 @@ struct CharacterRow: View {
             Image(systemName: "chevron.right")
                 .foregroundColor(.gray)
                 .font(.system(size: 14, weight: .semibold))
+                .accessibilityHidden(true)
         }
         .padding(.vertical, 8)
         .padding(.horizontal, 16)
